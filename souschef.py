@@ -46,7 +46,7 @@ class SousChef:
       "* servings of *" +\
       recipe_info['title'] + "*. Here are the steps:\n\n"
 
-    if recipe_steps:
+    if recipe_steps and recipe_steps[0]['steps']:
       for i, r_step in enumerate(recipe_steps[0]['steps']):
         equip_str = ""
         for e in r_step['equipment']:
@@ -72,7 +72,7 @@ class SousChef:
       
     response = "Lets see here...\n" + \
                "I've found these recipes: \n"
-    #import pdb;pdb.set_trace()
+
     for i, recipe in enumerate(self.context['recipes']):
       response += str(i+1) + ". " + recipe['title'] + "\n"
     response += "\nPlease enter the corresponding number of your choice."
@@ -83,7 +83,11 @@ class SousChef:
     if self.context['get_recipes']:
       self.context['recipes'] = \
         self.recipe_client.find_by_cuisine(cuisine)
-      
+    print
+    print "RESULT"
+    print self.context['recipes']
+    print "RESULT"
+    print
     response = "Lets see here...\n" + \
                "I've found these recipes: \n"
 

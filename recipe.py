@@ -30,17 +30,16 @@ class RecipeClient:
   def find_by_cuisine(self, cuisine):
     url = self.endpoint + "recipes/search"
 
-    params = {
+    payload = {
       'number': 5,
-      'query': '',
-      'cuisine': cuisine,
-      'offset': randint(0,895)
+      'query': ' ',
+      'cuisine': cuisine
     }
     headers={ 'X-Mashape-Key': self.api_key }
-
-    return requests.get(url, 
-                        params=params, 
+    results = requests.get(url, 
+                        params=payload, 
                         headers=headers).json()['results']
+    return results
 
   def get_info_by_id(self, id):
     url = self.endpoint + "recipes/" + str(id) + "/information"
