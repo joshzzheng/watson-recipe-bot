@@ -46,18 +46,21 @@ class SousChef:
       "* servings of *" +\
       recipe_info['title'] + "*. Here are the steps:\n\n"
 
-    for i, r_step in enumerate(recipe_steps[0]['steps']):
-      equip_str = ""
-      for e in r_step['equipment']:
-        equip_str += e['name'] + ", "
-      if not equip_str:
-        equip_str = "None"
-      else:
-        equip_str = equip_str[:-1]
+    if recipe_steps:
+      for i, r_step in enumerate(recipe_steps[0]['steps']):
+        equip_str = ""
+        for e in r_step['equipment']:
+          equip_str += e['name'] + ", "
+        if not equip_str:
+          equip_str = "None"
+        else:
+          equip_str = equip_str[:-1]
 
-      response += "*Step " + str(i+1) + "*:\n" +\
-        "_Equipment_: " + equip_str + "\n" +\
-        "_Action_: " + r_step['step'] + "\n\n"
+        response += "*Step " + str(i+1) + "*:\n" +\
+          "_Equipment_: " + equip_str + "\n" +\
+          "_Action_: " + r_step['step'] + "\n\n"
+    else:
+      response += "_No instructions available for this recipe._\n\n"
 
     response += "*Say anything to me to start over...*"
     return response
