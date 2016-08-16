@@ -27,7 +27,8 @@ class SousChef:
     if output_list and len(output_list) > 0:
       for output in output_list:
         if output and 'text' in output and \
-          'user_profile' not in output:
+          'user_profile' not in output and \
+          AT_BOT in output['text']:
           return output['text'].strip().lower(), \
                  output['channel']
     return None, None
@@ -62,13 +63,27 @@ class SousChef:
     return response
 
   def handle_ingredients_message(self, message):
-    if self.context['get_ingredients']:
+    if self.context['get_recipes']:
       self.context['recipes'] = \
         self.recipe_client.find_by_ingredients(message)
       
     response = "Lets see here...\n" + \
                "I've found these recipes: \n"
     #import pdb;pdb.set_trace()
+    for i, recipe in enumerate(self.context['recipes']):
+      response += str(i+1) + ". " + recipe['title'] + "\n"
+    response += "\nPlease enter the corresponding number of your choice."
+
+    return response
+  
+  def handle_cuisine_message(self, cuisine):
+    if self.context['get_recipes']:
+      self.context['recipes'] = \
+        self.recipe_client.find_by_cuisine(cuisine)
+      
+    response = "Lets see here...\n" + \
+               "I've found these recipes: \n"
+
     for i, recipe in enumerate(self.context['recipes']):
       response += str(i+1) + ". " + recipe['title'] + "\n"
     response += "\nPlease enter the corresponding number of your choice."
@@ -99,7 +114,7 @@ class SousChef:
       response = self.handle_ingredients_message(message)
 
     elif 'is_selection' in self.context.keys() and \
-       self.context['is_selection']:
+          self.context['is_selection']:
       selection = int(self.context['selection'])
 
       if selection >= 1 and selection <= 5:
@@ -107,14 +122,13 @@ class SousChef:
         response = self.handle_selection_message(selection)
       else:
         self.context['selection_valid'] = False
-
-        print 
-        print "RECIPES"
-        pprint(self.context['recipes'])
-        print "RECIPES"
-        print
         response = "Invalid selection! " +\
           "Say anything to see your choices again..."
+
+    elif watson_response['entities'] and \
+         watson_response['entities'][0]['entity'] == 'cuisine':
+      cuisine = watson_response['entities'][0]['value']
+      response = self.handle_cuisine_message(cuisine)
 
     else:
       response = ''
