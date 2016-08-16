@@ -28,8 +28,8 @@ class SousChef:
       for output in output_list:
         if output and 'text' in output and \
           'user_profile' not in output and \
-          AT_BOT in output['text']:
-          return output['text'].strip().lower(), \
+          self.at_bot in output['text']:
+          return output['text'].split(self.at_bot)[1].strip().lower(), \
                  output['channel']
     return None, None
 
@@ -59,7 +59,7 @@ class SousChef:
         "_Equipment_: " + equip_str + "\n" +\
         "_Action_: " + r_step['step'] + "\n\n"
 
-    response += "Say anything to start over..."
+    response += "*Say anything to me to start over...*"
     return response
 
   def handle_ingredients_message(self, message):
