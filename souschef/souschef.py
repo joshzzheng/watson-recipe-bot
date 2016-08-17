@@ -52,7 +52,7 @@ class SousChef:
         if not equip_str:
           equip_str = "None"
         else:
-          equip_str = equip_str[:-1]
+          equip_str = equip_str[:-2]
 
         response += "*Step " + str(i+1) + "*:\n" +\
           "_Equipment_: " + equip_str + "\n" +\
