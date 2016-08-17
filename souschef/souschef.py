@@ -18,9 +18,7 @@ class SousChef:
     self.delay = 0.5 #second
     self.workspace_id = '93054028-2b0b-4b21-9bc1-ec8c48970dbb'
 
-    self.context = {
-      "user": "there"
-    }
+    self.context = {}
   
   def parse_slack_output(self, slack_rtm_output):
     output_list = slack_rtm_output
@@ -83,11 +81,7 @@ class SousChef:
     if self.context['get_recipes']:
       self.context['recipes'] = \
         self.recipe_client.find_by_cuisine(cuisine)
-    print
-    print "RESULT"
-    print self.context['recipes']
-    print "RESULT"
-    print
+
     response = "Lets see here...\n" + \
                "I've found these recipes: \n"
 

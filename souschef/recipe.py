@@ -1,7 +1,6 @@
 import requests
 import json, os
 from dotenv import load_dotenv
-from random import randint
 
 class RecipeClient:
   def __init__(self, api_key):
@@ -36,10 +35,10 @@ class RecipeClient:
       'cuisine': cuisine
     }
     headers={ 'X-Mashape-Key': self.api_key }
-    results = requests.get(url, 
+
+    return requests.get(url, 
                         params=payload, 
                         headers=headers).json()['results']
-    return results
 
   def get_info_by_id(self, id):
     url = self.endpoint + "recipes/" + str(id) + "/information"

@@ -6,7 +6,7 @@ from slackclient import SlackClient
 from watson_developer_cloud import ConversationV1
 
 from recipe import RecipeClient
-from souschef import SousChef
+from souschef.souschef import SousChef
 
 if __name__ == "__main__":
   load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
