@@ -106,10 +106,6 @@ class SousChef:
 
     self.context = watson_response['context']
 
-    print
-    pprint(watson_response)
-    print
-
     if 'is_ingredients' in self.context.keys() and \
         self.context['is_ingredients']:
       response = self.handle_ingredients_message(message)
